@@ -68,8 +68,11 @@ fun runMatchingEngine() {
         // This is to catch kotlin.io.ReadAfterEOFException which occurs when there is no blank line before EOF
         // ReadAfterEOFException is an internal class which we can't catch explicitly
         // This is NOT IDEAL.  It's greedy and will eat ALL runtime exceptions in the engine but continue running
-        System.err.println(e)
+        // System.err.println(e)
     }
+
+    // Ensure that you leave exactly one line of whitespace between each portion of the requested output
+    println()
 
     // All orders were processed. Print the state of the order book
     for (o in engine.sellOrders)

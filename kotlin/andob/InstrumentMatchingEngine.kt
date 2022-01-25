@@ -3,7 +3,7 @@ package andob
 /**
  * Implements MatchingEngine interface for a given instrument passed in the constructor
  * This implementation matches orders from HIGHEST to LOWEST and then by timestamp if prices are the same
- * A new SELL order will match the HIGHEST BUY order with a bid higher that the sell price, then next highest
+ * A new SELL order will match the HIGHEST BUY order with a bid higher than the sell price, then next highest
  * until fully filled or there are no higher bids. A new BUY order will start with the LOWEST ask lower than its price
  * Any unmatched orders are added to the current order book
  *
