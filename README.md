@@ -1,7 +1,7 @@
 ### Matching Engine
 An implementation in Kotlin of a matching engine continuously
-trying to match the incoming BUY and SELL orders 
-see if they can trade
+trying to match the incoming BUY and SELL orders. Produces
+crossing trades on any match
 
 ANDOB stands for Andrey's Order Book
 
@@ -10,7 +10,7 @@ ANDOB stands for Andrey's Order Book
 - `resources` input files to test the engine
 - `build` a pre-compiled library
 
-### DESCRIPTION
+### Description
 - The engine reads orders from the `stdin`
 - It prints any matched trades on `stdout` on every input
 - After all inputs are read, it prints the state of the book
