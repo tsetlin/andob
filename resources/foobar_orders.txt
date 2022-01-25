@@ -1,0 +1,9 @@
+1    BUY    FOO    10    50
+2    SELL    FOO    8    48
+3    BUY    FOO    10    52
+4    SELL    FOO    12    48
+6    BUY    BAR    10    41
+7    BUY    BAR    10    43
+8    BUY    BAR    10    42
+9    BUY    BAR    10    45
+10    SELL    BAR    25    41
