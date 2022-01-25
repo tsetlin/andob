@@ -1,9 +1,6 @@
 package andob
 
-
-import kotlin.math.max
 import kotlin.math.min
-
 import java.util.Date
 import kotlin.Comparable
 
@@ -16,11 +13,13 @@ data class Instrument(val symbol: String) : Comparable<Instrument> {
     override fun compareTo(other: Instrument) = symbol.compareTo(other.symbol)
 }
 
-
 /**
- * Represents an order sent into the matching getEngine
+ * Represents an order sent into the MatchingEngine. Beside having attributes for an order, it has two other
+ * important functions:
+ *  - Knows how to fill this order against a contra order enforcing bid <= ask rule
+ *  - Implements the sort order needed to facilitate filling orders from HIGH to LOW
  */
-data class Order(
+public data class Order(
     val orderID: String, val side: OrderSide, val instrument: Instrument, val quantity: Int, val price: Float,
     val timestamp: Date) : Comparable<Order> {
 
@@ -30,9 +29,9 @@ data class Order(
     }
 
     /**
-     * An internal helper. Ensure that:
-     * BUY orders are sorted high-to-low price
-     * SELL orders are sorted low-to-high
+     * An internal helper field. Ensure that:
+     * BUY orders are sorted high-to-low price (has the negative signed price)
+     * SELL orders are sorted low-to-high (has the positive signed price)
      */
     private val signedPrice : Float
     get() = side.side * price
@@ -45,7 +44,7 @@ data class Order(
 
     /**
      * Do a partial or a full fill given a contra order
-     * Returns an order fill object. If it can match against the contra order, the order fill will contain
+     * @return an order fill object. If it can match against the contra order, the order fill will contain
      * a trade object with the quantity filled. Otherwise, the trade object is null
      */
     fun fill(contraOrder: Order) : OrderFill {

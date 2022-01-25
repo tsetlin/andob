@@ -22,20 +22,31 @@ class TradeLine(val trade: Trade) {
     }
 }
 
-//val getEngine = InstrumentMatchingEngine(Instrument("ETHUSD"))
+/**
+ * The target instance of the matching engine
+ */
 val engine = MatchingEngineSystem()
+//val getEngine = InstrumentMatchingEngine(Instrument("ETHUSD"))
 
 
+/**
+ * This is the main function to run the engine. It reads stdin, parses orders, and passes them to the matching engine.
+ * The engine tries to match the order right away. If a match is found, it is printed on a stdout right away.
+ * After all orders are processed, it prints the state of order book.
+ * If it encounters an invalid order, it will print an error message but will continue processing orders
+ * An EMPTY LINE indicates the end of orders and stops the process
+ */
 fun runMatchingEngine() {
     // Read stdin. From https://stackoverflow.com/questions/53575064/clean-way-of-reading-all-input-lines-in-kotlin
     val input = generateSequence(::readln)
 
     try {
         for (l in input) {
-            if (l.isNullOrBlank())
+            // Stop if an empty is encountered
+            if (l.isBlank())
                 break
 
-            // Read the order
+            // Read and order
             val order : Order
             try {
                 order = buildOrder(l)
@@ -56,6 +67,8 @@ fun runMatchingEngine() {
     {
         // This is to catch kotlin.io.ReadAfterEOFException which occurs when there is no blank line before EOF
         // ReadAfterEOFException is an internal class which we can't catch explicitly
+        // This is NOT IDEAL.  It's greedy and will eat ALL runtime exceptions in the engine but continue running
+        System.err.println(e)
     }
 
     // All orders were processed. Print the state of the order book

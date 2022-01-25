@@ -1,8 +1,10 @@
 package andob
 
 /**
- * Implements the matching getEngine interface. Uses the composite pattern to delegate actual order matching to
- * the InstrumentMatchingEngine for each instrument
+ * Implements MatchingEngine interface. It creates and maintains a MatchingEngine for each instrument encountered.
+ * Uses the Composite Pattern to delegate actual order matching tothe InstrumentMatchingEngine for each instrument
+ *
+ * @see InstrumentMatchingEngine
  */
 public class MatchingEngineSystem() : MatchingEngine {
 
@@ -23,7 +25,7 @@ public class MatchingEngineSystem() : MatchingEngine {
     override val buyOrders: List<Order>
         @Synchronized
         get() {
-            // This is a little clumsy but I couldn't
+            // This is a little clumsy, but I couldn't find a better way
             val allOrders = mutableListOf<Order>()
             for (o in instrumentEngineMap.values.map { it.buyOrders })
                 allOrders.addAll(o)
